@@ -5,8 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.csource.common.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +31,12 @@ public class UserHandler {
 	@Autowired
 	private UploadImgService imgService;
 	
+	/**
+	 * 跳转至图片列表
+	 * @param pageNum
+	 * @param map
+	 * @return
+	 */
 	@RequestMapping(value="/imgList", method=RequestMethod.GET)
 	public String list(@RequestParam(required=false,defaultValue="1") Integer pageNum, Map<String, Object> map) {
 		LinkedHashMap<String, Direction> orders = new LinkedHashMap<>();
@@ -39,13 +47,20 @@ public class UserHandler {
 		return "user/list";
 	}
 	
-	
+	/**
+	 * 跳转至图片上传页面
+	 * @return
+	 */
 	@RequestMapping(value="/toUpload", method=RequestMethod.GET)
 	public String toUpload() {
 		return "user/upload";
 	}
 	
-	
+	/**
+	 * 上传图片
+	 * @param img
+	 * @return
+	 */
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public String upload(@RequestParam MultipartFile img) {
 		String filename = img.getOriginalFilename();
@@ -58,7 +73,14 @@ public class UserHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String path = DfsUtils.upload(Const.upload_temp_dir+filename);
+		String path = null;
+		try {
+			path = DfsUtils.upload(Const.upload_temp_dir+filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (MyException e) {
+			e.printStackTrace();
+		}
 		System.out.println("path: "+path);
 		if(StringUtils.isNotEmpty(path)) {
 			UploadImg uploadImg = new UploadImg();
@@ -70,9 +92,17 @@ public class UserHandler {
 		} else {
 			return "user/uploadFail";
 		}
-		
 	}
 	
-	
+	@RequestMapping(value="/remove/{id}", method=RequestMethod.GET)
+	public String remove(@PathVariable int id, String path) {
+		try {
+			DfsUtils.remove(path);
+			imgService.delete(id);
+		} catch (IOException | MyException e) {
+			e.printStackTrace();
+		}
+		return "redirect:/user/imgList";
+	}
 	
 }

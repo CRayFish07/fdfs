@@ -7,6 +7,6 @@ import com.example.service.UploadImgService;
 
 
 @Service
-public class UploadImgServiceImpl extends BaseServiceImpl<UploadImg, Long> implements UploadImgService {
+public class UploadImgServiceImpl extends BaseServiceImpl<UploadImg, Integer> implements UploadImgService {
 
 }

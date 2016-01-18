@@ -8,6 +8,6 @@ import com.example.entity.UploadImg;
 
 
 @Repository
-public class UploadImgDaoImpl extends BaseDaoImpl<UploadImg, Long> implements UploadImgDao {
+public class UploadImgDaoImpl extends BaseDaoImpl<UploadImg, Integer> implements UploadImgDao {
 
 }

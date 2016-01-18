@@ -19,22 +19,42 @@ public class DfsUtils {
 		}
 	}
 	
-	public static String upload(String path) {
-		try {
-			TrackerClient tracker = new TrackerClient();
-			TrackerServer trackerServer = tracker.getConnection();
-			StorageClient storageClient = new StorageClient(trackerServer, null);
-			
-			String extName = path.substring(path.lastIndexOf(".")+1);
-			String[] results = storageClient.upload_file(path, extName , null);
-			if(results!=null && results.length>0) {
-				return "/"+results[0]+"/"+results[1];
-			}
-		} catch (IOException | MyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	/**
+	 * 上传文件
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 * @throws MyException
+	 */
+	public static String upload(String path) throws IOException, MyException {
+		TrackerClient tracker = new TrackerClient();
+		TrackerServer trackerServer = tracker.getConnection();
+		StorageClient storageClient = new StorageClient(trackerServer, null);
+		
+		String extName = path.substring(path.lastIndexOf(".")+1);
+		String[] results = storageClient.upload_file(path, extName , null);
+		if(results!=null && results.length>0) {
+			return "/"+results[0]+"/"+results[1];
 		}
 		return "";
 	}
 	
+	/**
+	 * 删除文件
+	 * @param path
+	 * @throws IOException
+	 * @throws MyException 
+	 */
+	public static void remove(String path) throws IOException, MyException {
+		TrackerClient tracker = new TrackerClient();
+		TrackerServer trackerServer = tracker.getConnection();
+		StorageClient storageClient = new StorageClient(trackerServer, null);
+		path = path.substring(1);
+		int index = path.indexOf("/");
+		String group = path.substring(0, index);
+		System.out.println("group="+group);
+		String remoteFilePath = path.substring(index+1);
+		System.out.println("remoteFilePath="+remoteFilePath);
+		storageClient.delete_file(group, remoteFilePath);
+	}
 }

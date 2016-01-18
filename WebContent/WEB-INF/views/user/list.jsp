@@ -29,14 +29,16 @@
 	                <th>ID</th>
 					<th>图片</th>
 					<th>上传时间</th>
+					<th>操作</th>
                 </tr>
               </thead>
               <tbody>
                 <c:forEach items="${page.content}" var="img">
 					<tr>
 						<td>${img.id}</td>
-						<td><img style="max-width:200px; max-height:100px"  src="http://www.alinetgo.com${img.path}" /></td>
+						<td><img style="max-width:200px; max-height:100px"  src="http://172.16.39.239${img.path}" /></td>
 						<td><tags:time time="${img.uploadTime}"></tags:time></td>
+						<td><a href="${ctx}/user/remove/${img.id}?path=${img.path}">删除</a></td>
 					</tr>
 				</c:forEach>
               </tbody>
