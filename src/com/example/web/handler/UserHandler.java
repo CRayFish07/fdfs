@@ -94,6 +94,12 @@ public class UserHandler {
 		}
 	}
 	
+	/**
+	 * 删除图片
+	 * @param id
+	 * @param path
+	 * @return
+	 */
 	@RequestMapping(value="/remove/{id}", method=RequestMethod.GET)
 	public String remove(@PathVariable int id, String path) {
 		try {
