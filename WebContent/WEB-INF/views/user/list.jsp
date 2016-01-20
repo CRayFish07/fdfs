@@ -28,6 +28,7 @@
                 <tr>
 	                <th>ID</th>
 					<th>图片</th>
+					<th>路径</th>
 					<th>上传时间</th>
 					<th>操作</th>
                 </tr>
@@ -46,6 +47,7 @@
 								</c:otherwise>
 							</c:choose>
 						</td>
+						<td><a href="http://172.16.39.239${img.path}" target="_blank">${img.path}</a></td>
 						<td><tags:time time="${img.uploadTime}"></tags:time></td>
 						<td><a href="${ctx}/user/remove/${img.id}?path=${img.path}">删除</a></td>
 					</tr>
