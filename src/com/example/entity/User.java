@@ -19,11 +19,17 @@ public class User extends SuperEntity {
 	@Column(name="email", length=100)
 	private String email;
 	
-	@Column(name="phone", length=20)
+	@Column(name="phone", length=20, columnDefinition="varchar(20) DEFAULT 1 COMMENT '手机'")
 	private String phone;
 	
 	public User() {
 		super();
+	}
+
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
 	}
 
 	public User(String username, String password, String email, String phone) {
