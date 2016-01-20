@@ -36,7 +36,16 @@
                 <c:forEach items="${page.content}" var="img">
 					<tr>
 						<td>${img.id}</td>
-						<td><img style="max-width:200px; max-height:100px"  src="http://172.16.39.239${img.path}" /></td>
+						<td>
+							<c:choose>
+								<c:when test="${fn:contains(img.path, 'png') || fn:contains(img.path, 'jpg') || fn:contains(img.path, 'jpeg') || fn:contains(img.path, 'gif')}">
+									<a href="http://172.16.39.239${img.path}" target="_blank"><img style="max-width:200px; max-height:100px"  src="http://172.16.39.239${img.path}" /></a>
+								</c:when>
+								<c:otherwise>
+									<div style="width: 160px;height: 100px; background-color: gray;display: block; cursor: pointer" onclick="window.location.href='http://172.16.39.239${img.path}'"></div>
+								</c:otherwise>
+							</c:choose>
+						</td>
 						<td><tags:time time="${img.uploadTime}"></tags:time></td>
 						<td><a href="${ctx}/user/remove/${img.id}?path=${img.path}">删除</a></td>
 					</tr>
