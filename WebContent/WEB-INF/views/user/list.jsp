@@ -42,7 +42,7 @@
 									<a href="http://172.16.39.239${img.path}" target="_blank"><img style="max-width:200px; max-height:100px"  src="http://172.16.39.239${img.path}" /></a>
 								</c:when>
 								<c:otherwise>
-									<div style="width: 160px;height: 100px; background-color: gray;display: block; cursor: pointer" onclick="window.location.href='http://172.16.39.239${img.path}'"></div>
+									<div style="width: 160px;height: 100px; background-color: #99CCCC;display: block; cursor: pointer" onclick="window.location.href='http://172.16.39.239${img.path}'"></div>
 								</c:otherwise>
 							</c:choose>
 						</td>
