@@ -19,7 +19,7 @@ public class User extends SuperEntity {
 	@Column(name="email", length=100)
 	private String email;
 	
-	@Column(name="phone", length=20, columnDefinition="varchar(20) DEFAULT 1 COMMENT '手机'")
+	@Column(name="phone", length=20)
 	private String phone;
 	
 	public User() {
