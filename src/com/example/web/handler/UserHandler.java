@@ -72,13 +72,13 @@ public class UserHandler {
 		filename = Encodes.encodeByMD5(filename+System.currentTimeMillis())+extName;
 		System.out.println(filename);
 		try {
-			FileUtil.uploadFileToServer(img.getInputStream(), Const.upload_temp_dir, filename);
+			FileUtil.uploadFileToServer(img.getInputStream(), Const.UPLOAD_TEMP_DIR, filename);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		String path = null;
 		try {
-			path = DfsUtils.upload(Const.upload_temp_dir+filename);
+			path = DfsUtils.upload(Const.UPLOAD_TEMP_DIR+filename);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MyException e) {
