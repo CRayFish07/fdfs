@@ -7,4 +7,6 @@ public class Const {
 	public static String upload_temp_dir = "/alidata/temp/";
 	public static String UPLOAD_DIR = "/upload";
 	
+	public static String KEY_PREFIX = "fastdfs:";
+	
 }

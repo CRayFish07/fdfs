@@ -39,7 +39,7 @@ public class DfsUtils {
 		if(results!=null && results.length>0) {
 			String remotePath = "/"+results[0]+"/"+results[1];
 			String localPath = getStorePath(path, extName);
-			RedisUtils.getInstance().set(localPath, remotePath);
+			RedisUtils.getInstance().set(Const.KEY_PREFIX + localPath, remotePath);
 			return localPath;
 		}
 		return "";
@@ -55,7 +55,7 @@ public class DfsUtils {
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageClient storageClient = new StorageClient(trackerServer, null);
-		String temp = RedisUtils.getInstance().get(path);
+		String temp = RedisUtils.getInstance().get(Const.KEY_PREFIX+path);
 		System.out.println(temp);
 		if(StringUtils.isNotEmpty(temp)) {
 			path = temp;
