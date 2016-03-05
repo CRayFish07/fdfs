@@ -28,6 +28,7 @@
                 <tr>
 	                <th>ID</th>
 					<th>图片</th>
+					<th>路径</th>
 					<th>上传时间</th>
 					<th>操作</th>
                 </tr>
@@ -36,7 +37,17 @@
                 <c:forEach items="${page.content}" var="img">
 					<tr>
 						<td>${img.id}</td>
-						<td><img style="max-width:200px; max-height:100px"  src="http://img.alinetgo.com${img.path}" /></td>
+						<td>
+							<c:choose>
+								<c:when test="${fn:contains(img.path, 'png') || fn:contains(img.path, 'jpg') || fn:contains(img.path, 'jpeg') || fn:contains(img.path, 'gif')}">
+									<a href="http://img.alinetgo.com${img.path}" target="_blank"><img style="max-width:200px; max-height:100px"  src="http://img.alinetgo.com${img.path}" /></a>
+								</c:when>
+								<c:otherwise>
+									<div style="width: 160px;height: 100px; background-color: #99CCCC;display: block; cursor: pointer" onclick="window.location.href='http://img.alinetgo.com${img.path}'"></div>
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td><a href="http://img.alinetgo.com${img.path}" target="_blank">${img.path}</a></td>
 						<td><tags:time time="${img.uploadTime}"></tags:time></td>
 						<td><a href="${ctx}/user/remove/${img.id}?path=${img.path}">删除</a></td>
 					</tr>

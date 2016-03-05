@@ -26,6 +26,12 @@ public class User extends SuperEntity {
 		super();
 	}
 
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
 	public User(String username, String password, String email, String phone) {
 		super();
 		this.username = username;
