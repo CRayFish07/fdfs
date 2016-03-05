@@ -56,6 +56,7 @@ public class DfsUtils {
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageClient storageClient = new StorageClient(trackerServer, null);
 		String temp = RedisUtils.getInstance().get(Const.KEY_PREFIX+path);
+		RedisUtils.getInstance().del(Const.KEY_PREFIX+path);
 		System.out.println(temp);
 		if(StringUtils.isNotEmpty(temp)) {
 			path = temp;
