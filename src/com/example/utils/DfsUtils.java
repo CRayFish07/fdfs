@@ -1,7 +1,10 @@
 package com.example.utils;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.csource.common.MyException;
 import org.csource.fastdfs.ClientGlobal;
 import org.csource.fastdfs.StorageClient;
@@ -34,7 +37,10 @@ public class DfsUtils {
 		String extName = path.substring(path.lastIndexOf(".")+1);
 		String[] results = storageClient.upload_file(path, extName , null);
 		if(results!=null && results.length>0) {
-			return "/"+results[0]+"/"+results[1];
+			String remotePath = "/"+results[0]+"/"+results[1];
+			String localPath = getStorePath(path, extName);
+			RedisUtils.getInstance().set(localPath, remotePath);
+			return localPath;
 		}
 		return "";
 	}
@@ -49,6 +55,11 @@ public class DfsUtils {
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageClient storageClient = new StorageClient(trackerServer, null);
+		String temp = RedisUtils.getInstance().get(path);
+		System.out.println(temp);
+		if(StringUtils.isNotEmpty(temp)) {
+			path = temp;
+		}
 		path = path.substring(1);
 		int index = path.indexOf("/");
 		String group = path.substring(0, index);
@@ -56,5 +67,21 @@ public class DfsUtils {
 		String remoteFilePath = path.substring(index+1);
 		System.out.println("remoteFilePath="+remoteFilePath);
 		storageClient.delete_file(group, remoteFilePath);
+	}
+	
+	
+	public static String getStorePath(String path, String extName) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyMMdd");
+		String filename = Encodes.encodeByMD5(path+System.currentTimeMillis());
+		return Const.UPLOAD_DIR + "/" + dateFormat.format(new Date()) + "/" + filename + "."+extName;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			remove("/rse");
+		} catch (IOException | MyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
