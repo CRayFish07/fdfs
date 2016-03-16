@@ -4,5 +4,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico">
-<c:set var="static_url" value="http://source.alinetgo.com"/>
+<c:set var="static_url" value="http://172.16.39.239"/>
 <script type="text/javascript" src="${ctx}/static/script/jquery-2.1.4.min.js"></script>
