@@ -116,7 +116,7 @@ public class DfsUtils {
 	
 	
 	public static String getStorePath(String path, String extName) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyMMdd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		String filename = Encodes.encodeByMD5(path+System.currentTimeMillis());
 		return Const.UPLOAD_DIR + "/" + dateFormat.format(new Date()) + "/" + filename + "."+extName;
 	}
