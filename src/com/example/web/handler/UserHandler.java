@@ -64,18 +64,11 @@ public class UserHandler {
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public String upload(@RequestParam MultipartFile img) {
 		String filename = img.getOriginalFilename();
-		System.out.println(filename);
 		String extName = filename.substring(filename.lastIndexOf("."));
 		filename = Encodes.encodeByMD5(filename+System.currentTimeMillis())+extName;
-		System.out.println(filename);
-		try {
-			FileUtil.uploadFileToServer(img.getInputStream(), Const.UPLOAD_TEMP_DIR, filename);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		String path = null;
 		try {
-			path = DfsUtils.upload(Const.UPLOAD_TEMP_DIR+filename);
+			path = DfsUtils.upload(img.getInputStream(), extName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MyException e) {
