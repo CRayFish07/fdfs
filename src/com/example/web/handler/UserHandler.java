@@ -16,11 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.entity.UploadImg;
 import com.example.service.UploadImgService;
-import com.example.utils.Const;
 import com.example.utils.DfsUtils;
 import com.example.utils.Direction;
 import com.example.utils.Encodes;
-import com.example.utils.FileUtil;
 import com.example.utils.Page;
 
 @RequestMapping("/user")
