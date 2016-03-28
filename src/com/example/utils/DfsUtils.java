@@ -1,6 +1,7 @@
 package com.example.utils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,6 +22,49 @@ public class DfsUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	/**
+	 * 通过输入流的方式上传文件至fastdfs, 将byte[]的长度默认设为1024*100, 即100kb
+	 * @param in	输入流
+	 * @param extName	文件的扩展名
+	 * @return
+	 * @throws IOException
+	 * @throws MyException
+	 */
+	public static String upload(InputStream in, String extName) throws IOException, MyException {
+		return upload(in, extName, 1024*100);
+	}
+	
+	
+	/**
+	 * 通过输入流的方式上传文件至fastdfs
+	 * @param in	输入流
+	 * @param extName	文件的扩展名
+	 * @param len	通过byte[]向fastfds写入,每次循环时byte[]的长度
+	 * @return
+	 * @throws IOException
+	 * @throws MyException
+	 */
+	public static String upload(InputStream in, String extName, int len) throws IOException, MyException {
+		TrackerClient tracker = new TrackerClient();
+		TrackerServer trackerServer = tracker.getConnection();
+		StorageClient storageClient = new StorageClient(trackerServer, null);
+		byte[] buf = new byte[len];
+		in.read(buf);
+		String[] results = storageClient.upload_appender_file(buf, extName, null);
+		if(results!=null && results.length>=2) {
+			while(in.read(buf)!=-1) {
+				storageClient.append_file(results[0], results[1], buf);
+			}
+			String remotePath = "/"+results[0]+"/"+results[1];
+			String localPath = getStorePath(WebUtils.makeRandomStr(6), extName);
+			RedisUtils.getInstance().set(Const.KEY_PREFIX+localPath , remotePath);
+			return localPath;
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * 上传文件
@@ -72,17 +116,8 @@ public class DfsUtils {
 	
 	
 	public static String getStorePath(String path, String extName) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyMMdd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		String filename = Encodes.encodeByMD5(path+System.currentTimeMillis());
 		return Const.UPLOAD_DIR + "/" + dateFormat.format(new Date()) + "/" + filename + "."+extName;
-	}
-	
-	public static void main(String[] args) {
-		try {
-			remove("/rse");
-		} catch (IOException | MyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
