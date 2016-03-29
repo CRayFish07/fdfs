@@ -62,7 +62,7 @@ public class UserHandler {
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public String upload(@RequestParam MultipartFile img) {
 		String filename = img.getOriginalFilename();
-		String extName = filename.substring(filename.lastIndexOf("."));
+		String extName = filename.substring(filename.lastIndexOf(".")+1);
 		filename = Encodes.encodeByMD5(filename+System.currentTimeMillis())+extName;
 		String path = null;
 		try {
