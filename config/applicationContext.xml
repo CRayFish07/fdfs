@@ -40,7 +40,7 @@
 		<!--最大空闲时间，超过空闲时间的连接将被丢弃。为0或负数则永不丢弃。默认为0-->
 		<property name="maxIdleTime" value="3600" /> 
 		<!--每隔一段时间检查所有连接池中的空闲连接。Default: 0-->
-		<property name="idleConnectionTestPeriod" value="60"/>  
+		<property name="idleConnectionTestPeriod" value="3600"/>  
 		<!--C3P0是异步操作的，缓慢的JDBC操作通过帮助进程完成。扩展这些操作可以有效的提升性能通过多线程实现多个操作同时被执行。默认为3-->
 		<property name="numHelperThreads" value="3" /> 
 		<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。
