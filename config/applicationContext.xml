@@ -38,7 +38,7 @@
 		<!--当连接池用完时客户端调用getConnection()后等待获取新连接的时间，超时后将抛出SQLException，如设为0则无限期等待。单位毫秒，默认为0-->
 		<property name="checkoutTimeout" value="20000" />
 		<!--最大空闲时间，超过空闲时间的连接将被丢弃。为0或负数则永不丢弃。默认为0-->
-		<property name="maxIdleTime" value="60" /> 
+		<property name="maxIdleTime" value="3600" /> 
 		<!--每隔一段时间检查所有连接池中的空闲连接。Default: 0-->
 		<property name="idleConnectionTestPeriod" value="60"/>  
 		<!--C3P0是异步操作的，缓慢的JDBC操作通过帮助进程完成。扩展这些操作可以有效的提升性能通过多线程实现多个操作同时被执行。默认为3-->
